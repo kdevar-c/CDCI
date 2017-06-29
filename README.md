@@ -3,7 +3,7 @@ Design and implement automation test cases for sample scenario provided. Demonst
 
 Setup from Github
 
-#Preconditions:
+# Preconditions:
 1.	Install Java on your computer
 2.	Download and install testNG plugin
 -[click here](http://marketplace.eclipse.org/content/testng-eclipse)
@@ -14,15 +14,15 @@ Setup from Github
 6.	Download the 32 bit Chrome Webdriver and copy in location : C:\Webdrivers
 -[click here] (https://chromedriver.storage.googleapis.com/index.html?path=2.30/)
 
-#Steps for executing
+# Steps for executing
 
 1.	Download project source files from github
 2.	Unzip the folder to the your working location
 3.	C:\Users\<Username>\project name of the folder Yelptest
 4.	Go to command prompt
 5.	Run the below command
-5.1 C: \Users\<username> Yelptest> mvn clean install
-5.2 Note: driver location, reports location can be modified through config.properties.
+5.1	C: \Users\<username> Yelptest> mvn clean install
+5.2	Note: driver location, reports location can be modified through config.properties.
 Setup and running using project zip files assuming files are sent in email or ftp.
 
 # Preconditions:
@@ -50,7 +50,7 @@ mvn archetype:generate -DgroupId=com.yelptest   -DartifactId=YelpTest -Dinteract
 (Wait till the project is imported and built in Eclipse).
 Hint: To look at the code, go to Eclipse. To execute the code, go to command line project directory where you have pom.xml
 9.	Go to command prompt and cd to YelpTest.
-9.1 C:\ Yelptest>
-9.2 C: \ Yelptest> mvn clean install
+9.1	C:\ Yelptest>
+9.2	C: \ Yelptest> mvn clean install
 Note: driver location, reports location can be modified through config.properties.
 
