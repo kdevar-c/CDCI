@@ -26,14 +26,14 @@ Note: driver location, reports location can be modified through config.propertie
 Setup and running using project zip files assuming files are sent in email or ftp.
 
 # Instructions for running from command prompt
-c.	Install Java on your computer
-d.	Download and install testNG plugin
+a.	Install Java on your computer
+b.	Download and install testNG plugin
 -[click here](http://marketplace.eclipse.org/content/testng-eclipse)
-b.	Download the Maven zip file apache-maven-3.5.0-bin.zip from below location
+c.	Download the Maven zip file apache-maven-3.5.0-bin.zip from below location
 -[click here](https://maven.apache.org/download.cgi)
-f.	Unzip the Maven to C:\javapps
-g.	Ensure that path is set for both Maven and Java to access from any location of command line.
-h.	Download the 32 bit Chrome Webdriver and copy in location : C:\Webdrivers
+d.	Unzip the Maven to C:\javapps
+e.	Ensure that path is set for both Maven and Java to access from any location of command line.
+f.	Download the 32 bit Chrome Webdriver and copy in location : C:\Webdrivers
 -[click here] (https://chromedriver.storage.googleapis.com/index.html?path=2.30/)
 
 1.	Create a maven project at command line to user profile directory( like C:\users\<username>)
@@ -51,3 +51,6 @@ Hint: To look at the code, go to Eclipse. To execute the code, go to command lin
 C:\ Yelptest>
 C: \ Yelptest> mvn clean install
 Note: driver location, reports location can be modified through config.properties.
+ 
+ 
+
