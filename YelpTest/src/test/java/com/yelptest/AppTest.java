@@ -27,7 +27,7 @@ import org.testng.annotations.BeforeTest;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Parameters;
 import org.testng.annotations.Test;
-
+import java.util.Locale;
 import com.relevantcodes.extentreports.DisplayOrder;
 import com.relevantcodes.extentreports.ExtentReports;
 import com.relevantcodes.extentreports.ExtentTest;
@@ -99,7 +99,7 @@ public class AppTest {
 		JavascriptExecutor js = (JavascriptExecutor)driver;
 		String sURL= js.executeScript("return document.title").toString();
 		System.out.println(sURL);
-		//Assert.assertEquals("Dallas Restaurants, Dentists, Bars, Beauty Salons, Doctors - Yelp", sURL);
+		Assert.assertEquals("Dallas Restaurants, Dentists, Bars, Beauty Salons, Doctors - Yelp", sURL);
 		
 		//js.executeScript("window.location-'http://www.yelp.com");
 		// entering text in find as Restaurants
@@ -112,7 +112,9 @@ public class AppTest {
 		js.executeScript("document.getElementById('header-search-submit').click()");
 		
 		// Initiate Extent Reports
-		reports = new ExtentReports(config.getString("reports.extent.html", null), false, DisplayOrder.NEWEST_FIRST);
+		Locale usLocale = new Locale("en-US");
+		reports = new ExtentReports(config.getString("reports.extent.html", null), false, DisplayOrder.NEWEST_FIRST, usLocale);
+		//reports = new ExtentReports(config.getString("reports.extent.html", null), false, DisplayOrder.NEWEST_FIRST);
 		// Declare Start test name
 		test = reports.startTest("Verify Yelp Home page");
 		test.log(LogStatus.PASS, "Test Case 1: Browser is opened and window is Maximized and Yelp home page is displayed.");
@@ -202,7 +204,7 @@ public class AppTest {
 		}
 		
 		// Test 10. clicking on first results from search page
-		WebElement eSelectRestaurant = ListofRestaurants.get(0);
+		WebElement eSelectRestaurant = ListofRestaurants.get(1);
 		eSelectRestaurant.findElement(By.className("biz-name")).click();
 		wait.until(ExpectedConditions.visibilityOfElementLocated(By.className("biz-page-header")));
 		
@@ -212,16 +214,17 @@ public class AppTest {
 		Thread.sleep(2000);
 		System.out.println("****************************************************************************************");
 		System.out.println("Restaurant Name: " + driver.findElement(By.className("biz-page-title")).getText());
-		System.out.println("Address: " + driver.findElement(By.tagName("address")).getText());
+		//System.out.println("Address: " + driver.findElement(By.tagName("address")).getText());
+		System.out.println("Address: " + js.executeScript("return document.getElementsByClassName('street-address')[0].getElementsByTagName('address')[0].innerHTML;"));
 		System.out.println("Phone Number: " + driver.findElement(By.className("biz-phone")).getText());
-		
 		//System.out.println("Website: " + driver.findElement(By.className("biz-website")).getText());
-		System.out.println("Website: " + driver.findElement(By.className("biz-website")).getText());
+		System.out.println("Website: " + js.executeScript("return document.getElementsByClassName('biz-website')[0].getElementsByTagName('a')[0].innerHTML;"));
 		Reporter.log("****************************************************************************************");
 		Reporter.log("Restaurant Name: " + driver.findElement(By.className("biz-page-title")).getText());
-		Reporter.log("Address: " + driver.findElement(By.tagName("address")).getText());
+		Reporter.log("Address: " + js.executeScript("return document.getElementsByClassName('street-address')[0].getElementsByTagName('address')[0].innerHTML;"));
 		Reporter.log("Phone Number: " + driver.findElement(By.className("biz-phone")).getText());
-		Reporter.log("Website: " + driver.findElement(By.className("biz-website")).getText());
+		Reporter.log("Website: " + js.executeScript("return document.getElementsByClassName('biz-website')[0].getElementsByTagName('a')[0].innerHTML;"));
+		
 		List<WebElement> CustomerReview = driver.findElements(By.className("review-content"));
 		int i = 0;
 		for (WebElement eachCustomerReview : CustomerReview) {
