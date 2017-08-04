@@ -1,5 +1,6 @@
 package com.yelptest;
 
+import java.io.File;
 import java.util.List;
 import java.util.concurrent.*;
 
@@ -8,8 +9,11 @@ import javax.swing.text.Document;
 import org.apache.commons.configuration.CompositeConfiguration;
 import org.apache.commons.configuration.PropertiesConfiguration;
 import org.apache.commons.configuration.SystemConfiguration;
+import org.apache.commons.io.FileUtils;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
+import org.openqa.selenium.OutputType;
+import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
@@ -90,11 +94,13 @@ public class AppTest {
 		// Test 1. Below step is open the yelp page.
 		
 				driver.get("http://www.yelp.com");
-				
+				// below code will capture the screen shots
+				File scrFile = ((TakesScreenshot)driver).getScreenshotAs(OutputType.FILE);
+				// Copying the image to reports folder.
+				FileUtils.copyFile(scrFile, new File("c:\\javapps\\Reports\\yelphomepage.png"));
 				// Maximize the window
 				driver.manage().window().maximize();
 				
-		// Kamal: 07/22 
 		//Java script code
 		JavascriptExecutor js = (JavascriptExecutor)driver;
 		String sURL= js.executeScript("return document.title").toString();
@@ -106,6 +112,10 @@ public class AppTest {
 		js.executeScript("document.getElementById('find_desc').value='Restaurants'");
 		// click the find button
 		js.executeScript("document.getElementById('header-search-submit').click()");
+		// below code will capture the screen shots
+		File scrFile1 = ((TakesScreenshot)driver).getScreenshotAs(OutputType.FILE);
+		// Copying the image to reports folder.
+		FileUtils.copyFile(scrFile1, new File("c:\\javapps\\Reports\\Search page.png"));
 		// entering the restaurants-pizza in search.		
 		js.executeScript("document.getElementById('find_desc').value='Restaurants - Pizza'");
 		// Click submit
@@ -118,7 +128,10 @@ public class AppTest {
 		// Declare Start test name
 		test = reports.startTest("Verify Yelp Home page");
 		test.log(LogStatus.PASS, "Test Case 1: Browser is opened and window is Maximized and Yelp home page is displayed.");
-		
+		// below code will capture the screen shots
+		File scrFile2 = ((TakesScreenshot)driver).getScreenshotAs(OutputType.FILE);
+		// Copying the image to reports folder.
+		FileUtils.copyFile(scrFile2, new File("c:\\javapps\\Reports\\Restaurants_Pizza_results.png"));
 		// Test 2. Below step clicks Restaurants on yelp home page.
 		//driver.findElement(By.linkText("Restaurants")).click();
 		test.log(LogStatus.PASS, "Test Case 2: User clicks Restaurants on yelp home page");
@@ -138,7 +151,7 @@ public class AppTest {
 		test.log(LogStatus.PASS, "Test Case 4 : Appending the Pizza Restaurants to search");
 		//driver.findElement(By.cssSelector("input[id='find_desc']")).sendKeys("Restaurants Pizza"); // Restaurants Pizza
 		//driver.findElement(By.cssSelector("button[id='header-search-submit']")).click();
-		Thread.sleep(1000);
+		
 		wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector("span[style='display: inline;']")));
 		String beforeloadingpage = driver.findElement(By.className("pagination-results-window")).getText();
 		wait.until(ExpectedConditions.visibilityOfElementLocated(By.className("pagination-results-window")));
@@ -158,7 +171,10 @@ public class AppTest {
 
 		driver.findElement(By.className("filters-toggle")).click();
 		wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector("span[style='display: inline;']")));
-
+		// below code will capture the screen shots
+				File scrFile3 = ((TakesScreenshot)driver).getScreenshotAs(OutputType.FILE);
+				// Copying the image to reports folder.
+				FileUtils.copyFile(scrFile3, new File("c:\\javapps\\Reports\\Filters.png"));
 		String sAddress = "5702 Richmond Ave, Dallas, TX 75206";
 
 		try {
@@ -211,7 +227,6 @@ public class AppTest {
 		// Test 11. Log all critical information of the selected restauran
 		// details,for the reporting purpose . Address, Phone No, web site
 		// details . First 3 customer reviews
-		Thread.sleep(2000);
 		System.out.println("****************************************************************************************");
 		System.out.println("Restaurant Name: " + driver.findElement(By.className("biz-page-title")).getText());
 		//System.out.println("Address: " + driver.findElement(By.tagName("address")).getText());
@@ -246,8 +261,10 @@ public class AppTest {
 	public void afterTest() {
 		// Below method will close the browser
 		driver.quit();
-		reports.flush();
 		reports.endTest(test);
+		reports.flush();
+		reports.close();
+		
 	}
 
 	@DataProvider
